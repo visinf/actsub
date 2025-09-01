@@ -10,7 +10,7 @@
 
 <h3>ICCV 2025 (to appear)</h3>
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b.svg)](https://github.com/visinf/actsub/)
+[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b.svg)](http://arxiv.org/abs/2508.21695)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 </div>
