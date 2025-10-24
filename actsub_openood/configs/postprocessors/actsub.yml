@@ -1,0 +1,36 @@
+postprocessor:
+  name: actsub
+
+  # Set True to tune the lambda parameter from Equation 10.
+  # If False, the value specified below as 'lmbd' will be used.
+  APS_mode: True
+
+  postprocessor_args:
+    # Activation shaping method for the score of the decisive component.
+    # Choose one of: ["scale", "ash_s"].
+    func: "scale" #ash_s
+
+    # Pruning percentage for the activation shaping method.
+    # We reported with: 97.5 for ViT, 95 for ResNet.
+    pp: 95
+
+    # Lambda parameter from Equation 10.
+    # We reported with: 1 for ViT, 2 for ResNet.
+    lmbd: 2
+
+    # Parameter k from Equation 4.
+    # If -1, it will be automatically calculated from the training data.
+    # Can also be set to precomputed values. Can be set to approximately 363 for ResNet and 367 for ViT to avoid compute time. The actual index will slightly change for each random subset of training data.  
+    c_idx: -1
+
+    # Set True to tune the parameters of the decisive component.
+    # If False, the 'pp' parameter will be used instead.
+    tune_decisive: True
+
+  postprocessor_sweep:
+    # Search range for lambda (Equation 10) during tuning.
+    lmbd_list: [0.5, 1.0, 1.5, 2]
+
+  postprocessor_sweep_decisive:
+    # Search range for the pruning percentage of the activation shaping methods.
+    pp_list: [85, 90, 92.5, 95, 97.5]

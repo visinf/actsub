@@ -1,0 +1,22 @@
+config:
+    # Device index for the inference. Set to -99 for CPU. Otherwise specify GPU index such as: 0, 1, 2 etc.
+    device: 0 
+
+    # Batch size for the dataloader.
+    batch_size: 200
+
+    # Set one of: ["standard", "openood"]. 
+    # Determines which experimental setting the training samples will be extracted for.
+    # Influences where the output files will be written.
+    # For example, if "standard" is selected, outputs go to "actsub_standard/checkpoints".
+    experiment: "standard" #"openood"
+
+    # Set model according to the experimental setting:
+    # "standard": ["resnet", "mobilenet"]
+    # "openood": ["resnet", "vit"]
+    model: "resnet" #"mobilenet" #"vit"
+
+    # Path to the ImageNet-1k training split. 
+    # Specify the full directory path up to (but not including) the class subdirectories. Can also be manually set.
+    # This allows compatibility with existing ImageNet-1k training splits that may use different directory structures or naming conventions.
+    data_root: "$DATASETS/imagenet/train" #/your_dataset_directory/imagenet/train

@@ -1,0 +1,16 @@
+config:
+    
+    # Backbone model used for evaluation. 
+    # Choose one of: ["resnet", "vit"].
+    model: "resnet" #"resnet" #"vit"
+
+    # Directory for the datasets that will be automatically downloaded by the OpenOOD framework. Can be freely set. 
+    data_dir: "$DATASETS/openood_data" #/your_dataset_directory/openood_data
+
+    # Set to True to use the GEN variant (https://github.com/XixiLiu95/GEN) from Table 8 of the Supplementary Material. Set to False otherwise.
+    is_gen: False #True
+
+    # Determines if the prototype variant from Supplemental "Dependence on the data volume." is used.
+    # We use prototype variant for "vit", and the standard variant for "resnet".
+    # Use True for "vit" and False for "resnet". 
+    is_proto: False #True

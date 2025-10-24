@@ -1,0 +1,35 @@
+postprocessor:
+  name: actsub
+
+  # Set True to tune the lambda parameter from Equation 10.
+  # If False, the value specified below as 'lmbd' will be used.
+  APS_mode: True
+
+  postprocessor_args:
+
+    # Lambda parameter from Equation 10.
+    lmbd: 0.5
+
+    # Parameter gamma of GEN (https://github.com/XixiLiu95/GEN).
+    gamma: 0.1
+
+    # Parameter M of GEN.
+    M: 50 
+
+    # Parameter k from Equation 4.
+    # If -1, it will be automatically calculated from the training data.
+    # Can also be set to precomputed values. Can be set to approximately 363 for ResNet and 367 for ViT to avoid compute time. The actual index will slightly change for each random subset of training data.
+    c_idx: -1 
+
+    # Set True to tune the parameters of the decisive component.
+    # If False, the 'pp' parameter will be used instead.
+    tune_decisive: True
+
+  postprocessor_sweep:
+    # Search range for lambda (Equation 10) during tuning.
+    lmbd_list: [0.5, 1.0, 1.5, 2]
+
+  postprocessor_sweep_decisive:
+    # Search ranges for gamma and M parameters of GEN.
+    gamma_list: [0.01, 0.05, 0.1, 0.5, 1]
+    M_list: [50, 100, 200]

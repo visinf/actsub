@@ -1,0 +1,38 @@
+config:
+    # Device index for the inference. Set to -99 for CPU. Otherwise specify GPU index such as: 0, 1, 2 etc.
+    device: 0 
+
+    # Batch size for the dataloader.
+    batch_size: 200
+
+    # Set to either "in1k" for ImageNet-1k or "cifar" for CIFAR
+    id_data: "in1k" 
+
+    # Model selection:
+    # For ImageNet-1k select one of: ["resnet", "mobilenet"]
+    # For CIFAR10/CIFAR100 select one of: [10, 100] (as integer not string)
+    model_name : "resnet" #"mobilenet" #10 #100
+
+    # Directory of the datasets. This should match the $DATASETS environment variable set when downloading the data. Can also be manually set.
+    data_root: "$DATASETS" #/your_dataset_directory
+
+    # Path to the training samples (include the .npy file).
+    sample_dir: "checkpoints/in1k_resnet_train_samples.npy"
+
+    # Set to "actsub" to tune both the pruning percentage and lambda hyperparameters.
+    # Setting to anything else will raise an error.
+    ood_func: "actsub"
+
+    # Pruning percentage for the activation shaping methods.
+    # For CIFAR experiments, percentages are taken from Djurisic et al., "Extremely Simple Activation Shaping for Out-of-Distribution Detection," ICLR 2023.
+    pruning_p_tune: [85, 90, 92.5, 95, 97.5]
+
+    # The hyperparameter lambda from Equation 10. We set the search range as following:
+    lmbd_tune: [0.5, 1, 1.5, 2]
+
+    # Hyperparameter k from Equation 4. If set to -1, it will be automatically computed from the training split.
+    # Precomputed indexes can be used to save computation:
+    # ImageNet-1k/ResNet-50: 363
+    # ImageNet-1k/MobileNet-v2: 303
+    # Note: The random sample of the training set might slightly change the found index. However we observe that it does not make any significant difference. 
+    c_idx: -1

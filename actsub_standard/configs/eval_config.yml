@@ -1,0 +1,50 @@
+config:
+    # Device index for the inference. Set to -99 for CPU. Otherwise specify GPU index such as: 0, 1, 2 etc.
+    device: 0 
+
+    # Batch size for the dataloader.
+    batch_size: 200
+
+    # Set to either "in1k" for ImageNet-1k or "cifar" for CIFAR
+    id_data: "in1k" #"cifar"
+
+    # Model selection:
+    # For ImageNet-1k select one of: ["resnet", "mobilenet"]
+    # For CIFAR10/CIFAR100 select one of: [10, 100] (as integer not string)
+    model_name : "resnet" #"mobilenet" #10 #100
+
+    # Directory of the datasets. This should match the $DATASETS environment variable set when downloading the data. Can also be manually set.
+    data_root: "$DATASETS" #/your_dataset_directory
+
+    # Path to the training samples (include the .npy file).
+    sample_dir: "checkpoints/in1k_resnet_train_samples.npy"
+
+    # Select OOD detection method. Possible selections include: ["actsub", "actsub_dec", "actsub_insig", "ash_s", "scale"]
+    # actsub: Final method from Equation 10.
+    # actsub_dec: Only the decisive component from Equation 9.
+    # actsub_insig: Only the insignificant component from Equation 8.
+    # ash_s, scale: Sanity check, reproduce baselines. 
+    ood_func: "actsub" #"actsub_dec" #"actsub_insig" #"ash_s" #"scale"
+
+    # Pruning percentage of the activation shaping methods. With the reported experiments we use the following with SCALE:
+    # ImageNet-1k/ResNet-50: 95
+    # ImageNet-1k/MobileNet-v2: 97.5
+    # CIFAR10: 95
+    # CIFAR100: 90
+    # See "configs/tune_config.yml" and "tune.py" for parameter tuning details.
+    # Note: Due to the lack of a non-semantic variation dataset such as ImageNet-R, we use the same parameters reported by Djurisic et al.,"Extremely Simple Activation Shaping for Out-of-Distribution Detection, In ICLR 2023" for CIFAR. 
+    pruning_p: 95
+
+    # The hyperparameter lambda from Equation 10. With the reported experiments we use following:
+    # ImageNet-1k/ResNet-50, CIFAR10, CIFAR100: 2.
+    # ImageNet-1k/MobileNet-v2: 0.5
+    # Please refer to "configs/tune_config.yml" and "tune.py" for how the parameters are found. These values are precomputed.
+    # Note: "tune.py" returns 1.5 for ImageNet-1k/ResNet-50 setting. We initially reported 2.0 due to a small error in our previous tuning script. The difference between 1.5 and 2 is approximately 0.01% for AUROC and 0.1% for FPR on Average.
+    lmbd: 2
+
+    # The hyperparameter k from Equation 4. If set to -1, the hyperparameter will be set automatically.
+    # To avoid compute time, one can use the following precomputed indexes:
+    # ImageNet-1k/ResNet-50: 363
+    # ImageNet-1k/MobileNet-v2: 303
+    # Note: The random sample of the training set might slightly change the found index. However we observe that it does not make any significant difference. 
+    c_idx: -1
